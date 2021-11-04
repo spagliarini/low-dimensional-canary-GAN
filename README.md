@@ -17,7 +17,7 @@ This directory contains the codes to train the classifier once the training data
 # classifier-analysis
 This directory contains all the codes to analyze the training and generated data: syllable features, classifier evaluation, utils needed to plot and perform the analysis. ReadME available inside.
 
-# Reference to other projects
+# References to other projects (to be updated)
 - WaveGAN
 - reservoirPY
 - classifier (Nathan ICANN)
