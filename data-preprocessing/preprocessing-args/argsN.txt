@@ -1,0 +1,15 @@
+data_dir,D:\\PhD_Bordeaux\\DATA\\Dataset_GAN\\Datasets_Marron\\Dataset_2\\Single_syll_N
+dataset_dim,None
+f_cut_max,7999
+f_cut_min,500
+format,png
+min_silent_dur,0.003
+min_syl_dur,0.01
+n_lags,10
+nperseg,1024
+option,syll_silence_features
+output_dir,None
+overlap,66
+syll_name,None
+threshold,100000.0
+window,hanning
