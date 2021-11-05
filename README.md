@@ -3,7 +3,7 @@
 1) WaveGAN training requirements
 The requirements are the same as in the original WaveGAN project.
 
-2) pre-processing, classifier training and analysis requirements
+2) Pre-processing, classifier training and analysis requirements
 To generate the sound, train the classifier, and perform the analysis the requirements are contained in the file requirements txt.
 
 

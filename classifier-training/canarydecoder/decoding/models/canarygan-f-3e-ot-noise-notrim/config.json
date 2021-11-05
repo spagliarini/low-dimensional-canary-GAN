@@ -1,0 +1,1 @@
+{"preprocessing": {"sampling_rate": 16000, "hop_length": 512, "n_fft": 1024, "padding": "wrap", "trim_below_db": 0, "lifter": null}, "inputs": {"continuous": false, "mfcc": false, "delta1": true, "delta2": true}}

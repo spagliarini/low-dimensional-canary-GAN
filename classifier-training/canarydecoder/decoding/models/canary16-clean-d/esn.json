@@ -1,0 +1,26 @@
+{
+    "cls": "ESN",
+    "cls_bin": "cls_bin-1602597406.0959022",
+    "version": "0.2.0",
+    "serial": 1602597406.0959022,
+    "attr": {
+        "W": "esn-W-1602597406.0959022.npy",
+        "Win": "esn-Win-1602597406.0959022.npy",
+        "Wfb": null,
+        "Wout": "esn-Wout-1602597406.0959022.npy",
+        "N": 1000,
+        "lr": 0.05,
+        "in_bias": true,
+        "dim_inp": 41,
+        "dim_out": 16,
+        "typefloat": "float64",
+        "reg_model": {
+            "type": "ridge",
+            "coef": 1e-08
+        },
+        "fbfunc": null
+    },
+    "misc": {
+        "fbfunc_info": null
+    }
+}
