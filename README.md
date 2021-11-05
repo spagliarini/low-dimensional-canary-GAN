@@ -20,7 +20,7 @@ This directory contains the scripts to train the classifier once the training da
 ## classifier-analysis
 This directory contains all the scripts to analyze the training and generated data: syllable features, classifier evaluation, utils needed to plot and perform the analysis. ReadME available inside.
 
-## References to other projects (to be updated)
+## References to other projects 
 ### WaveGAN
 Our version of WaveGAN is the same as the original one developed by Donahue et. Al, we only modified the latent space dimension parameter, and we added scripts for a straightforward generation after training in train_wavegan.py (see ReadME in wavegan-training directory).
 - link to git original project: https://github.com/chrisdonahue/wavegan
@@ -33,4 +33,4 @@ A simple and flexible code for Reservoir Computing architectures like Echo State
 ## Applications
 ### Vocal learning model
 The WaveGAN generator has been used as motor control function in a canary vocal learning model. In the same paper, the syllable classifier has been used to model the first layer of perception.
-- Link to ICDL 2021 paper: 
+- Link to ICDL 2021 paper: https://github.com/spagliarini/canary-vocal-sensorimotor-mode
