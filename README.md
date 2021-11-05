@@ -9,16 +9,28 @@ To generate the sound, train the classifier, and perform the analysis the requir
 
 # REPOSITORY ORGANIZATION
 ## data-preprocessing
-This directory contains all the codes useful to pre-process the data and prepare different types of datasets. ReadME available inside.
+This directory contains the scripts useful to pre-process the data and prepare different types of datasets. ReadME available inside.
+
+## WaveGAN training
+This directory contains the scripts needed to train the generative adversarial network, mainly taken from the original WaveGAN project (reference below, and inside the directory). ReadME available inside.
 
 ## classifier-training
-This directory contains the codes to train the classifier once the training dataset is ready. Moreover, it contains the references to the necessary tools that one needs to run the experiments.
+This directory contains the scripts to train the classifier once the training dataset is ready. Moreover, it contains the references to the necessary tools that one needs to run the experiments.
 
 ## classifier-analysis
-This directory contains all the codes to analyze the training and generated data: syllable features, classifier evaluation, utils needed to plot and perform the analysis. ReadME available inside.
+This directory contains all the scripts to analyze the training and generated data: syllable features, classifier evaluation, utils needed to plot and perform the analysis. ReadME available inside.
 
 ## References to other projects (to be updated)
-- WaveGAN
-- reservoirPY
-- classifier (Nathan ICANN)
-- ICDL 2021 paper where we use generator and classifier
+### WaveGAN
+Our version of WaveGAN is the same as the original one developed by Donahue et. Al, we only modified the latent space dimension parameter, and we added scripts for a straightforward generation after training in train_wavegan.py (see ReadME in wavegan-training directory).
+- link to git original project: https://github.com/chrisdonahue/wavegan
+
+### ReservoirPy
+A simple and flexible code for Reservoir Computing architectures like Echo State Networks (ESN). We used this to build the syllable classifier. The version of reservoirPy needed for this project is version v2.0.
+- link to git project: https://github.com/reservoirpy/reservoirpy
+- link to ICANN paper: https://github.com/neuronalX/Trouvain2020_ICANN
+
+## Applications
+### Vocal learning model
+The WaveGAN generator has been used as motor control function in a canary vocal learning model. In the same paper, the syllable classifier has been used to model the first layer of perception.
+- Link to ICDL 2021 paper: 
