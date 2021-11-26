@@ -26,7 +26,7 @@ Our version of WaveGAN is the same as the original one developed by Donahue et. 
 - link to git original project: https://github.com/chrisdonahue/wavegan
 
 ### ReservoirPy
-A simple and flexible code for Reservoir Computing architectures like Echo State Networks (ESN). We used this to build the syllable classifier. The version of reservoirPy needed for this project is version v2.0.
+A simple and flexible code for Reservoir Computing architectures like Echo State Networks (ESN). We used this to build the syllable classifier. The version of reservoirPy needed for this project is version v0.2.0.
 - link to git project: https://github.com/reservoirpy/reservoirpy
 - link to ICANN paper: https://github.com/neuronalX/Trouvain2020_ICANN
 
