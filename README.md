@@ -60,5 +60,8 @@ The WaveGAN generator has been used as motor control function in a canary vocal 
 - Link to ICDL 2021 paper: https://github.com/spagliarini/canary-vocal-sensorimotor-mode
 
 ## Cite
-S. Pagliarini, N. Trouvain, A. Leblois, X. Hinaut, What does the Canary Say? Low-Dimensional GAN
-Applied to Birdsong. 2021 (HAL preprint)
+@article{pagliarini2021does,
+  title={What does the Canary Say? Low-Dimensional GAN Applied to Birdsong},
+  author={Pagliarini, Silvia and Trouvain, Nathan and Leblois, Arthur and Hinaut, Xavier},
+  year={2021}
+}
