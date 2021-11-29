@@ -2,6 +2,7 @@ This repository is the code for the paper ''What does the Canary Say? Low-Dimens
 Applied to Birdsong'' (Silvia Pagliarini, Nathan Trouvain, Arthur Leblois, Xavier Hinaut).
 
 SHORT ABSTRACT
+
 Altogether, our results show that a latent space
 of dimension 3 is enough to produce a varied repertoire of sounds
 of quality often indistinguishable from real canary ones, spanning
