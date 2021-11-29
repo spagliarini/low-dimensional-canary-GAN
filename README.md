@@ -1,3 +1,24 @@
+This repository is the code for the paper ''What does the Canary Say? Low-Dimensional GAN
+Applied to Birdsong'' (Silvia Pagliarini, Nathan Trouvain, Arthur Leblois, Xavier Hinaut).
+
+SHORT ABSTRACT
+Altogether, our results show that a latent space
+of dimension 3 is enough to produce a varied repertoire of sounds
+of quality often indistinguishable from real canary ones, spanning
+all the types of syllables of the dataset. Importantly, we show
+that the 3-dimensional GAN generalizes by interpolating between
+the various syllable types. We rely on UMAP representations to
+qualitatively show the similarities between the training data and
+the generated data, and between the generated syllables and the
+interpolations produced. Exploring the latent representations of
+syllable types, we show that they form well identifiable subspaces
+of the latent space. This study provides tools to train simple
+sensorimotor models, as inverse models, from perceived sounds
+to motor representations of the same sounds. Both the RNNbased classifier and the small dimensional GAN provide a way
+to learn the mappings of perceived and produced sounds.
+
+----> link to HAL preprint https://hal.inria.fr/hal-03244723/document
+
 # REQUIREMENTS
 1) WaveGAN training requirements
 The requirements are the same as in the original WaveGAN project.
