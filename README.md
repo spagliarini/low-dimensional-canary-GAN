@@ -1,5 +1,7 @@
-This repository is the code for the paper ''What does the Canary Say? Low-Dimensional GAN
-Applied to Birdsong'' (Silvia Pagliarini, Nathan Trouvain, Arthur Leblois, Xavier Hinaut).
+This repository is the code for the paper 
+
+S. Pagliarini, N. Trouvain, A. Leblois, X. Hinaur, What does the Canary Say? Low-Dimensional GAN
+Applied to Birdsong. 2021 (HAL preprint)
 
 SHORT ABSTRACT
 
