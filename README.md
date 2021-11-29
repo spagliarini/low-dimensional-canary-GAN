@@ -58,3 +58,7 @@ A simple and flexible code for Reservoir Computing architectures like Echo State
 ### Vocal learning model
 The WaveGAN generator has been used as motor control function in a canary vocal learning model. In the same paper, the syllable classifier has been used to model the first layer of perception.
 - Link to ICDL 2021 paper: https://github.com/spagliarini/canary-vocal-sensorimotor-mode
+
+## Cite
+S. Pagliarini, N. Trouvain, A. Leblois, X. Hinaut, What does the Canary Say? Low-Dimensional GAN
+Applied to Birdsong. 2021 (HAL preprint)
