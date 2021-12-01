@@ -1,90 +1,147 @@
-# Canary decoder (alpha version 0.0.a1)
+# Classifier model training
 
-## Installation
+## Requirements
 
-Download the source files of `reservoirpy` (https://github.com/neuronalX/reservoirpy.git) and `canarydecoder`.
-
-From within a virtual environment, run:
+Decoder requirements can be found in the `requirements.txt` file, and installed via:
 
 ```bash
-pip install <path/to/reservoirpy/root>
-pip install <path/to/canarydecoder/root>
+pip install -r requirements.txt
 ```
 
-where the root directory contains the `setup.py` file and the `canarydecoder/` directory (same for `reservoirpy`).
+## Training
 
-## Get started
+Training can be performed using command-line interface to launch the `train.py` script:
 
-### Load a `Decoder`
+```bash
+python classifier-training/train.py --help
 
-In the following example, `canarydecoder` is used to produce annotations of samples of canary songs.
+       USAGE: classifier-training/train.py [flags]
+flags:
 
-The input data is stored in a directory. Each input is a 1s sample of song.
-
-To produce annotations, we first load a pre-trained `Decoder`, named `canary16-deltas`.
-
-```python
-from canarydecoder import load
-
-decoder = load('canary16-deltas')
+classifier-training/train.py:
+  --conf: Path to the JSON config file.
+  --data: Path to dataset with train and test directories.
+  --[no]export: If set, model is exported at the end (training with all available data).
+    (default: 'true')
+  --[no]fold: If set, will perform cross validation on the number of folds set by folds parameter.
+    (default: 'true')
+  --folds: Number of trials to perform to compute metrics
+    (default: '1')
+    (a positive integer)
+  --instances: Number of instances to train.
+    (default: '1')
+    (an integer)
+  --report: Results directory.
+  --save: Directory where the trained model will be saved.
+  --workers: Number of parallel processes to launch for computation.
+    (default: '-1')
+    (integer >= -1)
 ```
 
-The `Decoder` object stores procedures to decode the input data. It can be seen as a pipeline objects, that manage the flow of data through
-two main components, the `Processor` and the model.
+For instance, to perform 5-fold cross validation over 5 different random
+initializations of the classifier, and to save the best final model, 
+run:
 
-`Processors` are objects in charge with preprocessing the input data and extracting the relevant features. The `Processor` object is instanciated following a configuration file stored in the same directory as the model data. This configuration
-tells the `Processor` how to extract the required features in the input data.
-
-The model is in this case a `reservoirpy` ESN object, loaded from checkpoint data stored in the model directory.
-
-### Produce annotations
-
-We can now call the `Decoder` on a list of arrays, on a directory containing .wav files or on a single .wav file :
-
-```python
-annotations = decoder('./samples/of/canary/songs')
+```bash
+python train.py --conf reports/conf.json --data data/classifier-data --export --fold --folds 5 --instances 5 --report reports/ --save models/classifier-model
 ```
 
-The `annotations` object will then be a list of `Annotation` instances.
+## Data format
 
-### Work with `Annotation`
+Data should be provided as two .csv files, `train_dataset.csv` and `test_dataset.csv`.
+These .csv files have two columns, `x` and `y`, where `x` is the path
+to the syllable audio sample in .wav format and `y` is the corresponding syllable label:
 
-`Annotation` objects store the input and output of a model. Through them, you can access:
-- `audio`: the original audio data;
-- `feat`: the features extracted by the `Processor`, for example MFCC;
-- `vect`: the raw logits output of the model used;
-- `lbl`: the top 1 class predicted by the model for each timestep;
-- `vocab`: the vocabulary used for annotations;
-- `id`: an identification for inputs, by default the name of the wave file decoded or an integer.
+| x                   | y |
+|---------------------|---|
+| ./data/sample_1.wav | A |
+| ./data/sample_2.wav | B |
+| ./data/sample_3.wav | C |
 
-`Annotation` objects behave like iterable Python object, meaning you can access a particular timestep by its index, or slice, or iterate on them. You will have the corresponding slice of annotation displayed as a new `Annotation` instance.
+`train_dataset.csv` contains all samples used during training and
+cross-validation. `test_dataset.csv` contains all samples used during
+testing.
 
+## Configuration file
 
-```python
-annotation.vect # output logits
-annotation.vocab # class name attributed to each logit
+Configuration should be provided as a JSON file:
 
-one_annotation = annotation[0] # -> an Annotation of only one timestep, with corresponding feature, audio...
-sliced_annotation_audio = annotation[0:5].audio # -> 5 first Annotations audio data
-
-# Most of Annotation attributes are simple NumPy arrays or lists of arrays.
-mean_vects = np.mean(annotation.vect)
+```json
+{
+  "esn": {
+    "N": 1000,
+    "ridge": 1e-8,
+    "lr": 5e-2,
+    "sr": 0.5,
+    "input_bias": true,
+    "mfcc_scaling": 0.0,
+    "delta_scaling": 1.0,
+    "delta2_scaling": 0.7,
+    "feedback": false,
+    "feedback_scaling": 0.0,
+    "fbfunc": "softmax",
+    "input_connectivity": 0.1,
+    "rc_connectivity": 0.1,
+    "fb_connectivity": 0.1,
+    "wash_nr_time_step": 0,
+    "seed": 42
+  },
+  "data": {
+    "sampling_rate": 16000,
+    "hop_length": 160,
+    "n_fft": 320,
+    "fmax": 8000,
+    "fmin": 500,
+    "n_mfcc": 20,
+    "padding": "nearest",
+    "trim_silence": false,
+    "continuous": false,
+    "mfcc": false,
+    "d": true,
+    "d2": true,
+    "highpass": null,
+    "order": null,
+    "lifter": 0
+  }
+}
 ```
 
-## Tune parameters
+Parameters under `esn` key are hyperparameters of the Echo State Network classifier.
 
-Well please don't tune them... It doesn't work yet (or you would have to retrain everything, but the training process is being mean with me and still doesn't want to work)
+| param              | default | comment                                                 |
+|--------------------|---------|---------------------------------------------------------|
+| N                  | 1000    | Number of units in the Echo State Network reservoir.    |
+| ridge              | 1e-8    | Regularization coefficient for learning.                |
+| lr                 | 5e-2    | Leak rate for Echo State Network.                       |
+| sr                 | 0.5     | Spectral radius of the ESN recurrent matrix.            |
+| input_bias         | true    | Add bias parameter to inputs.                           |
+| mfcc_scaling       | 0.0     | Scaling coefficient applied to MFCCs.                   |
+| delta_scaling      | 1.0     | Scaling coefficient applied to MFCC 1st derivatives.    |
+| delta2_scaling     | 0.7     | Scaling coefficient applied to MFCC 2nd derivatives.    |
+| feedback           | false   | Activate feedback from readout to reservoir in the ESN. |
+| feedback_scaling   | 0.0     | Scaling coefficient of feedback vector.                 |
+| fbfunc             | softmax | Activation function for readout values.                 |
+| input_connectivity | 0.1     | Input matrix connectivity.                              |
+| rc_connectivity    | 0.1     | Recurrent matrix connectivity.                          |
+| fb_connectivity    | 0.1     | Feedback matrix connectivity.                           |
+| wash_nr_time_step  | 0       | Input timesteps to consider as warmup during training.  |
+| seed               | 42      | Random generator seed for model initialization.         |
 
-But theoretically, you will soon be able to:
-- plug a custom model
-- train a custom model
-- tune everything 
+Parameters under `data` key are data preprocessing parameters:
 
-For now, it is technically possible to change parameters by changing the configuration files inside the `canarydecoder/decoding/models/` directory (or inside any trained model directory). But the ESN won't respond well to variations in preprocessing parameters (and even worse with model hyperparameters, of course).
-
-## Available models
-
-- `canary16`: ESN canary decoder with a 16 syllables repertory, trained over MFCC + deltas1 + deltas2.
-- `canary16-deltas`: ESN canary decoder with 16 syllables repertory, trained over only deltas1 + deltas2 of MFCC.
-
-Both models contains a `Processor` configuration to load and preprocess audio data and a pre-trained ESN models.
+| sampling_rate | 16000         | Audio file sampling rate.                                                                                            |
+|---------------|---------------|----------------------------------------------------------------------------------------------------------------------|
+| hop_length    | 160000 x 0.01 | Strides between FFT analysis windows.                                                                                |
+| n_fft         | 160000 x 0.02 | Number of FFT components (size of the window).                                                                       |
+| fmax          | 8000          | Maximum authorized frequency for samples.                                                                            |
+| fmin          | 500           | Minimum authorized frequency for samples.                                                                            |
+| n_mfcc        | 20            | Number of MFCC coefficients to extract.                                                                              |
+| padding       | nearest       | Padding method used to compute derivatives at signal edges.                                                          |
+| trim_silence  | false         | If is set to a number > 0, will use `librosa.trim_silence` method to remove silent parts under this power threshold. |
+| continuous    | false         | If true, concatenate all samples for training.                                                                       |
+| mfcc          | false         | Whether to use MFCC as features.                                                                                     |
+| d             | true          | Wether to use MFCC 1st derivatives as features.                                                                      |
+| d2            | true          | Wether to use MFCC 2nd derivatives as features.                                                                      |
+| highpass      | null          | If >0, will apply a highpass filter using this value as cut frequency.                                               |
+| order         | null          | Order of the highpass filter.                                                                                        |
+| lifter        | 0             | Liftering coefficient of MFCC features.                                                                              |

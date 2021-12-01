@@ -58,8 +58,8 @@ def create_annotations(args):
     # decoder = load('021220-8e-balanced')
 
     # Create dictionary
-    annotations = decoder(args.data_dir + '/' + 'generation_' + str(args.ckpt_n)) # if loop on ckpt_n
-    #annotations = decoder(args.data_dir) # if only one dir as input dir
+    #annotations = decoder(args.data_dir + '/' + 'generation_' + str(args.ckpt_n)) # if loop on ckpt_n
+    annotations = decoder(args.data_dir) # if only one dir as input dir
 
     return annotations
 
@@ -2127,7 +2127,7 @@ def several_instances(generation_data, summary_dataset, legend_list_instances, l
         plt.savefig(args.data_dir + '/' + args.output_dir + '/' + 'Cross_entropy_noGAN_real' + str(args.n_ld_dim[ld]) + '.' + args.format)
 
     plt.close('all')
-        
+
     # Cumulative results with average of the instances
     avg_mean_across_time = []
     avg_std_across_time = []
@@ -2392,7 +2392,7 @@ def several_instances(generation_data, summary_dataset, legend_list_instances, l
         plt.title('Number of syllable per class across dim')
     plt.tight_layout()
     plt.savefig(args.data_dir + '/' + args.output_dir + '/' + 'Percentage_class_across_time_and_dim.' + args.format)
-    
+
     # ALL the classes NOGAN
     fig, ax = plt.subplots()
     for gc in range(0, np.size(classes)):

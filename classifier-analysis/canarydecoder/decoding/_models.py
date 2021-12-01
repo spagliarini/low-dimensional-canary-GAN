@@ -6,14 +6,15 @@ Pre-trained models indexation.
 """
 
 import os
-import json 
-from typing import Dict
+import json
+import pickle
+from pathlib import Path
 
 import numpy as np
 
 import reservoirpy
 
-# path to the pretrained models. Should be a remote repository if 
+# path to the pretrained models. Should be a remote repository if
 # this code is released one day.
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "models")
 
@@ -43,8 +44,6 @@ MODEL_LIST = [
     "021220-1e-balanced",
     "021220-8e",
     "021220-8e-balanced"
-    #"canary42"
-    #"canary42-deltas",
 ]
 
 
@@ -63,18 +62,27 @@ def _get_model(name: str):
     --------
         Model -- Loaded pre-trained model.
     """
-    
-    # retrieve known model 
-    if name in MODEL_LIST:
-        model_dir = os.path.join(MODEL_PATH, name)
-        return reservoirpy.load(model_dir)
-    # retrieve custom user model
-    elif os.path.isdir(name):
-        return reservoirpy.load(name)
+
+    # retrieve known model
+    if name in MODEL_LIST or os.path.exists(name):
+        if name in MODEL_LIST:
+            model_dir = Path(MODEL_PATH, name)
+        else:
+            model_dir = Path(name)
+
+        # 1st case: this a reservoirpy v0.3 model saved as .pkl file.
+        for file in model_dir.iterdir():
+            if file.suffix == ".pkl":
+                with file.open("r+b") as fp:
+                    return pickle.load(fp)
+
+        # 2nd case: this is reservoirpy v0.2 or v0.1 model
+        return reservoirpy.load_compat(model_dir)
     else:
-        raise ValueError(f'Unknown model "{name}". Available ESN models: {MODEL_LIST}.')
-    
-    
+        raise ValueError(f'Unknown model "{name}". '
+                         f'Available ESN models: {MODEL_LIST}.')
+
+
 def _get_config(name: str):
     """Retrieve model configuration.
 
@@ -91,24 +99,26 @@ def _get_config(name: str):
     --------
         Dict -- Configuration file.
     """
-    # retrieve known model configuration
+    # retrieve known model configuration
     if name in MODEL_LIST:
         model_dir = os.path.join(MODEL_PATH, name)
         with open(os.path.join(model_dir, "config.json"), "r") as f:
             config = json.load(f)
         return config
-    # retrieve custom user configuration 
+    # retrieve custom user configuration
     elif os.path.isdir(name):
         try:
             with open(os.path.join(name, "config.json"), "r") as f:
                 config = json.load(f)
             return config
         except FileNotFoundError:
-            raise FileNotFoundError(f"No 'config.json' configuration file available in {name}.")
+            raise FileNotFoundError(f"No 'config.json' configuration "
+                                    f"file available in {name}.")
     else:
-        raise ValueError(f'Unknown model "{name}". Available ESN models: {MODEL_LIST}.')
-    
-    
+        raise ValueError(f'Unknown model "{name}". '
+                         f'Available ESN models: {MODEL_LIST}.')
+
+
 def _get_vocab(name: str):
     """Retrieve model configuration.
 
@@ -125,16 +135,18 @@ def _get_vocab(name: str):
     --------
         np.ndarray -- Vocab
     """
-    # retrieve known model vocab
+    # retrieve known model vocab
     if name in MODEL_LIST:
         model_dir = os.path.join(MODEL_PATH, name)
         return np.load(os.path.join(model_dir, "vocab.npy"))
 
-    # retrieve custom user vocab 
+    # retrieve custom user vocab
     elif os.path.isdir(name):
         try:
             return np.load(os.path.join(name, "vocab.npy"))
         except FileNotFoundError:
-            raise FileNotFoundError(f"No 'vocab.npy' configuration file available in {name}.")
+            raise FileNotFoundError(f"No 'vocab.npy' configuration "
+                                    f"file available in {name}.")
     else:
-        raise ValueError(f'Unknown model "{name}". Available ESN models: {MODEL_LIST}.')
+        raise ValueError(f'Unknown model "{name}". '
+                         f'Available ESN models: {MODEL_LIST}.')
