@@ -25,8 +25,8 @@ import pickle
 SAVE_DIR = "hyper-explorations/"
 VERBOSE = False
 ## Variables globales spécifiques à hyperopt (l'optimisateur bayésien)
-HP_MAX_EVALS = 20 # TODO: MAXIMUM NUMBER OF TRIALS THAT WILL BE PERFORMED
-HP_WARMUP_EVALS = round(HP_MAX_EVALS/3) # NUMBER OF RANDOM TRIALS TO BOOTSTRAP THE ALGORITHM # Nombre de stimulus aléatoires qui vont être exploré avant que l'optimisation bayésienne se mette en marche !
+HP_MAX_EVALS = 20 # TODO: MAXIMUM NUMBER OF FOLDS THAT WILL BE PERFORMED
+HP_WARMUP_EVALS = round(HP_MAX_EVALS/3) # NUMBER OF RANDOM FOLDS TO BOOTSTRAP THE ALGORITHM # Nombre de stimulus aléatoires qui vont être exploré avant que l'optimisation bayésienne se mette en marche !
 SAVE_TRIAL_OBJ_EVERY = 3 # # TODO: (change if you want less files produced) THE TRIAL OBJECT (containing all trials) IS SAVED EVERY ... TIMES # On sauvegarde le fichier général tous les ... fois
 CURR_EVAL = 0 #INIT OF VARIABLE
 
