@@ -1,7 +1,3 @@
-This repository is the code for the paper 
-
-S. Pagliarini, N. Trouvain, A. Leblois, X. Hinaut, What does the Canary Say? Low-Dimensional GAN
-Applied to Birdsong. 2021 (HAL preprint)
 
 SHORT ABSTRACT
 
@@ -20,7 +16,6 @@ sensorimotor models, as inverse models, from perceived sounds
 to motor representations of the same sounds. Both the RNNbased classifier and the small dimensional GAN provide a way
 to learn the mappings of perceived and produced sounds.
 
-----> link to HAL preprint https://hal.inria.fr/hal-03244723/document
 
 In the directory "examples" it is possible to find some examples of the generated data:
 1) a spectrogram shows the comparison between one example from the real dataset, and two sequences obtained padding together several syllables.
@@ -58,14 +53,3 @@ A simple and flexible code for Reservoir Computing architectures like Echo State
 - link to git project: https://github.com/reservoirpy/reservoirpy
 - link to ICANN paper: https://github.com/neuronalX/Trouvain2020_ICANN
 
-## Applications
-### Vocal learning model
-The WaveGAN generator has been used as motor control function in a canary vocal learning model. In the same paper, the syllable classifier has been used to model the first layer of perception.
-- Link to ICDL 2021 paper: https://github.com/spagliarini/canary-vocal-sensorimotor-mode
-
-## Cite
-@article{pagliarini2021does,
-  title={What does the Canary Say? Low-Dimensional GAN Applied to Birdsong},
-  author={Pagliarini, Silvia and Trouvain, Nathan and Leblois, Arthur and Hinaut, Xavier},
-  year={2021}
-}
