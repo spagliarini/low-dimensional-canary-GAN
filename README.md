@@ -22,6 +22,10 @@ to learn the mappings of perceived and produced sounds.
 
 ----> link to HAL preprint https://hal.inria.fr/hal-03244723/document
 
+In the directory "examples" it is possible to find some examples of the generated data:
+1) a spectrogram shows the comparison between one example from the real dataset, and two sequences obtained padding together several syllables.
+2) the .wav sequences 
+
 # REQUIREMENTS
 1) WaveGAN training requirements
 The requirements are the same as in the original WaveGAN project.
